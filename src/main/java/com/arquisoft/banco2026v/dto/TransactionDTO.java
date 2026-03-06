@@ -31,12 +31,20 @@ public class TransactionDTO {
     public TransactionDTO() {
     }
 
-    public TransactionDTO(Long id, String senderAccountNumber, String receiverAccountNumber, BigDecimal amount, LocalDateTime timestamp) {
+    public TransactionDTO(
+            Long id,
+            String senderAccountNumber,
+            String receiverAccountNumber,
+            BigDecimal amount,
+            LocalDateTime timestamp,
+            String idempotencyKey
+    ) {
         this.id = id;
         this.senderAccountNumber = senderAccountNumber;
         this.receiverAccountNumber = receiverAccountNumber;
         this.amount = amount;
         this.timestamp = timestamp;
+        this.idempotencyKey = idempotencyKey;
     }
 
     public Long getId() {
@@ -77,5 +85,13 @@ public class TransactionDTO {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getIdempotencyKey() {
+        return idempotencyKey;
+    }
+
+    public void setIdempotencyKey(String idempotencyKey) {
+        this.idempotencyKey = idempotencyKey;
     }
 }

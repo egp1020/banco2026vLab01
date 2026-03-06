@@ -30,15 +30,26 @@ public class Transaction {
     @Column(nullable = false)
     private LocalDateTime timestamp = LocalDateTime.now();
 
+    @Column(name = "idempotency_key", unique = true, length = 100)
+    private String idempotencyKey;
+
     public Transaction() {
     }
 
-    public Transaction(Long id, String senderAccountNumber, String receiverAccountNumber, BigDecimal amount, LocalDateTime timestamp) {
+    public Transaction(
+            Long id,
+            String senderAccountNumber,
+            String receiverAccountNumber,
+            BigDecimal amount,
+            LocalDateTime timestamp,
+            String idempotencyKey
+    ) {
         this.id = id;
         this.senderAccountNumber = senderAccountNumber;
         this.receiverAccountNumber = receiverAccountNumber;
         this.amount = amount;
         this.timestamp = timestamp;
+        this.idempotencyKey = idempotencyKey;
     }
 
     public Long getId() {
@@ -79,5 +90,13 @@ public class Transaction {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getIdempotencyKey() {
+        return idempotencyKey;
+    }
+
+    public void setIdempotencyKey(String idempotencyKey) {
+        this.idempotencyKey = idempotencyKey;
     }
 }

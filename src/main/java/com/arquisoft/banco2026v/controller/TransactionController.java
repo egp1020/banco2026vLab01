@@ -20,9 +20,11 @@ import java.net.URI;
 @RequestMapping(value = {"/api/transactions", "/api/v1/transactions"}, produces = "application/json")
 public class TransactionController {
 
-    @Autowired
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
 
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @PostMapping
     public ResponseEntity<TransactionDTO> transferMoney(
