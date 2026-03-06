@@ -1,11 +1,11 @@
 package com.arquisoft.banco2026v.controller;
 
+import com.arquisoft.banco2026v.dto.PagedResponseDTO;
 import com.arquisoft.banco2026v.dto.TransactionDTO;
 import com.arquisoft.banco2026v.service.TransactionService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +44,10 @@ public class TransactionController {
     }
 
     @GetMapping({"/account/{accountNumber}", "/{accountNumber}"})
-    public ResponseEntity<Page<TransactionDTO>> getTransactionsByAccount(
+    public ResponseEntity<PagedResponseDTO<TransactionDTO>> getTransactionsByAccount(
             @PathVariable @NotBlank String accountNumber,
             @PageableDefault(size = 20) Pageable pageable
     ) {
-        return ResponseEntity.ok(transactionService.getTransactionsForAccount(accountNumber, pageable));
+        return ResponseEntity.ok(PagedResponseDTO.from(transactionService.getTransactionsForAccount(accountNumber, pageable)));
     }
 }

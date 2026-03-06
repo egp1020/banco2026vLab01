@@ -1,10 +1,10 @@
 package com.arquisoft.banco2026v.controller;
 
 import com.arquisoft.banco2026v.dto.CustomerDTO;
+import com.arquisoft.banco2026v.dto.PagedResponseDTO;
 import com.arquisoft.banco2026v.service.CustomerService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +26,8 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CustomerDTO>> getAllCustomers(@PageableDefault(size = 20) Pageable pageable) {
-        return ResponseEntity.ok(customerFacade.getAllCustomers(pageable));
+    public ResponseEntity<PagedResponseDTO<CustomerDTO>> getAllCustomers(@PageableDefault(size = 20) Pageable pageable) {
+        return ResponseEntity.ok(PagedResponseDTO.from(customerFacade.getAllCustomers(pageable)));
     }
 
     @GetMapping("/{id}")
