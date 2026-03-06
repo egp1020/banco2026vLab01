@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -18,8 +20,8 @@ public class Customer {
     private String firstName; // firstName VARCHAR(50) NOT NULL;
     @Column(nullable = false, length = 50)
     private String lastName;
-    @Column(nullable = false)
-    private Double balance;
+    @Column(nullable = false, precision = 19, scale = 2)
+    private BigDecimal balance;
 
     public Customer() {
     }
@@ -80,11 +82,11 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public Double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }

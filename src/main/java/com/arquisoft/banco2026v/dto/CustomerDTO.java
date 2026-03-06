@@ -1,16 +1,20 @@
 package com.arquisoft.banco2026v.dto;
 
+
+import java.math.BigDecimal;
+
 public class CustomerDTO {
     private Long id;
     private String accountNumber;
     private String firstName;
     private String lastName;
     private Double balance;
+    private BigDecimal balance;
 
     public CustomerDTO() {
     }
 
-    public CustomerDTO(Long id, String accountNumber, String firstName, String lastName, Double balance) {
+    public CustomerDTO(Long id, String accountNumber, String firstName, String lastName, BigDecimal balance) {
         this.id = id;
         this.accountNumber = accountNumber;
         this.firstName = firstName;
@@ -50,11 +54,11 @@ public class CustomerDTO {
         this.lastName = lastName;
     }
 
-    public Double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }

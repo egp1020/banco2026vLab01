@@ -1,10 +1,12 @@
 package com.arquisoft.banco2026v.dto;
 
+import java.math.BigDecimal;
+
 public class TransferRequestDTO {
 
     private String senderAccountNumber;
     private String receiverAccountNumber;
-    private Double amount;
+    private BigDecimal amount;
 
     public TransferRequestDTO() {
     }
@@ -25,11 +27,11 @@ public class TransferRequestDTO {
         this.receiverAccountNumber = receiverAccountNumber;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 }
