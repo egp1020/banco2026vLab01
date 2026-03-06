@@ -2,11 +2,15 @@ package com.arquisoft.banco2026v.controller;
 
 import com.arquisoft.banco2026v.dto.CustomerDTO;
 import com.arquisoft.banco2026v.service.CustomerService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
@@ -25,7 +29,7 @@ public class CustomerController {
 
     // ✅ Obtener un cliente por ID
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
+    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable @Positive Long id) {
         return ResponseEntity.ok(customerFacade.getCustomerById(id));
     }
 
@@ -35,6 +39,7 @@ public class CustomerController {
         if (customerDTO.getBalance() == null) {
             throw new IllegalArgumentException("Balance cannot be null");
         }
+            @Valid @RequestBody CustomerDTO customerDTO,
 
         return ResponseEntity.ok(customerFacade.createCustomer(customerDTO));
     }
