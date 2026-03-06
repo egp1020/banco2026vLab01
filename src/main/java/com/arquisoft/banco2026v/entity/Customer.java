@@ -1,7 +1,5 @@
 package com.arquisoft.banco2026v.entity;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -35,13 +33,12 @@ public class Customer {
     *   "balance": 2123
     * }
     * */
-    @JsonCreator
     public Customer(
-            @JsonProperty("id") Long id,
-            @JsonProperty("accountNumber") String accountNumber,
-            @JsonProperty("firstName") String firstName,
-            @JsonProperty("lastName") String lastName,
-            @JsonProperty("balance") Double balance
+            Long id,
+            String accountNumber,
+            String firstName,
+            String lastName,
+            BigDecimal balance
     ) {
         this.id = id;
         this.accountNumber = accountNumber;

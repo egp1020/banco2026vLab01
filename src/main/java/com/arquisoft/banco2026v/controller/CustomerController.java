@@ -25,19 +25,16 @@ public class CustomerController {
         this.customerFacade = customerFacade;
     }
 
-    // ✅ Obtener todos los clientes
     @GetMapping
     public ResponseEntity<Page<CustomerDTO>> getAllCustomers(@PageableDefault(size = 20) Pageable pageable) {
         return ResponseEntity.ok(customerFacade.getAllCustomers(pageable));
     }
 
-    // ✅ Obtener un cliente por ID
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable @Positive Long id) {
         return ResponseEntity.ok(customerFacade.getCustomerById(id));
     }
 
-    // ✅ Crear un nuevo cliente
     @PostMapping
     public ResponseEntity<CustomerDTO> createCustomer(
             @Valid @RequestBody CustomerDTO customerDTO,
