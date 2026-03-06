@@ -4,15 +4,19 @@ import com.arquisoft.banco2026v.dto.CustomerDTO;
 import com.arquisoft.banco2026v.service.CustomerService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
+import java.net.URI;
 
 @Validated
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping({"/api/customers", "/api/v1/customers"})
 public class CustomerController {
 
     private final CustomerService customerFacade;
@@ -23,8 +27,8 @@ public class CustomerController {
 
     // ✅ Obtener todos los clientes
     @GetMapping
-    public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
-        return ResponseEntity.ok(customerFacade.getAllCustomers());
+    public ResponseEntity<Page<CustomerDTO>> getAllCustomers(@PageableDefault(size = 20) Pageable pageable) {
+        return ResponseEntity.ok(customerFacade.getAllCustomers(pageable));
     }
 
     // ✅ Obtener un cliente por ID
@@ -35,13 +39,28 @@ public class CustomerController {
 
     // ✅ Crear un nuevo cliente
     @PostMapping
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
-        if (customerDTO.getBalance() == null) {
-            throw new IllegalArgumentException("Balance cannot be null");
-        }
+    public ResponseEntity<CustomerDTO> createCustomer(
             @Valid @RequestBody CustomerDTO customerDTO,
-
-        return ResponseEntity.ok(customerFacade.createCustomer(customerDTO));
+            UriComponentsBuilder uriBuilder
+    ) {
+        CustomerDTO createdCustomer = customerFacade.createCustomer(customerDTO);
+        URI location = uriBuilder.path("/api/v1/customers/{id}")
+                .buildAndExpand(createdCustomer.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(createdCustomer);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDTO> updateCustomer(
+            @PathVariable @Positive Long id,
+            @Valid @RequestBody CustomerDTO customerDTO
+    ) {
+        return ResponseEntity.ok(customerFacade.updateCustomer(id, customerDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable @Positive Long id) {
+        customerFacade.deleteCustomer(id);
+        return ResponseEntity.noContent().build();
+    }
 }

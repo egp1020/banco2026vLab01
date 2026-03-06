@@ -5,7 +5,8 @@ import com.arquisoft.banco2026v.entity.Customer;
 import com.arquisoft.banco2026v.entity.Transaction;
 import com.arquisoft.banco2026v.repository.CustomerRepository;
 import com.arquisoft.banco2026v.repository.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

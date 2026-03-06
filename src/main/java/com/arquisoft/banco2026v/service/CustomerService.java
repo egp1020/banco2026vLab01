@@ -4,7 +4,8 @@ import com.arquisoft.banco2026v.dto.CustomerDTO;
 import com.arquisoft.banco2026v.entity.Customer;
 import com.arquisoft.banco2026v.mapper.CustomerMapper;
 import com.arquisoft.banco2026v.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +22,8 @@ public class CustomerService {
         this.customerMapper = customerMapper;
     }
 
-    public List<CustomerDTO> getAllCustomers() {
-        return customerRepository.findAll().stream()
-                .map(customerMapper::toDTO).toList();
+    public Page<CustomerDTO> getAllCustomers(Pageable pageable) {
+        return customerRepository.findAll(pageable).map(customerMapper::toDTO);
     }
 
     public CustomerDTO getCustomerById(Long id) {
